@@ -21,8 +21,8 @@ module.exports = {
             {
                 test:/\.css$/,
                 use:[
-                    {loader:'style-loader/url' },
-                    {loader:'file-loader' }
+                    {loader: 'style-loader/useable'},
+                  {loader: 'css-loader'}
                 ]
             }
         ]

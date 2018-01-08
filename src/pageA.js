@@ -1,4 +1,4 @@
-//import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 var page = "subPageA";
 
@@ -7,7 +7,7 @@ if(page==="subPageA"){
     //    var _subPageA = require('./subPageA');
     //},'subPageA')
 
-    import(/* webpackChunkName:'subPageA' */'./subPageA').then(function(subPageA){ /* 这是es6的魔法注释，指定chunkname */
+    import(/* webpackChunkName:'subPageA' */'./subPageA').then(function(subPageA){ /* 杩欐槸es6鐨勯瓟娉曟敞閲婏紝鎸囧畾chunkname */
         console.log(subPageA);
     })
 
@@ -22,9 +22,5 @@ import(/* webpackChunkName:'subPageB' */'./subPageB').then(function(subPageB){
 }
 
 
-require.ensure([],function(){
-    var _ = require('lodash');
-    _.join([1,2],'23');
-},'vendor')
 
 export default 'pageA';

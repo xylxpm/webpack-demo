@@ -32,9 +32,10 @@ module.exports = {
         }),
 
         new webpack.optimize.CommonsChunkPlugin({
-            name:'common',/* 这里想把业务代码中的公共代码提取出来，重复2次就提取 ，需要指定chunk的范围*/
-            minChunks:2,
-            chunks:['pageA','pageB']
+            async:'async-common',
+            children:true,
+            minChunks:2
+
         })
     ]
 }

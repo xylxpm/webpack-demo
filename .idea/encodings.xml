@@ -2,6 +2,9 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/pageA.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/pageB.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/subPageA.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/webpack.config.js" charset="UTF-8" />
   </component>
 </project>

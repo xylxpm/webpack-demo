@@ -1,16 +1,30 @@
-if(0){
-    require.ensure(['./subPageA'],function(){},'subPageA')
-}else{
-    require.ensure(['./subPageB'],function(){},'subPageB')
+//import * as _ from 'lodash';
+
+var page = "subPageA";
+
+if(page==="subPageA"){
+    //require.ensure([],function(){
+    //    var _subPageA = require('./subPageA');
+    //},'subPageA')
+
+    import(/* webpackChunkName:'subPageA' */'./subPageA').then(function(subPageA){ /* 这是es6的魔法注释，指定chunkname */
+        console.log(subPageA);
+    })
+
+}else if(page==="subPageB"){
+    //require.ensure(['./subPageB'],function(){
+    //    var _subPageB = require('./subPageB');
+    //},'subPageB')
+
+import(/* webpackChunkName:'subPageB' */'./subPageB').then(function(subPageB){
+        console.log(subPageB);
+    })
 }
 
-//import * as _ from 'lodash';
-//这里修改代码，实现代码分割
-require.ensure(['lodash'],function(){
-    "use strict";
-    var _ = requier('lodash');  /* 上面一个lodash只是加载，这里才会执行。上面那个可以不写，require.ensure([],function(){})  这样再在里面写本行，也是可以的*/
-    _.join([1,2],'23');
 
+require.ensure([],function(){
+    var _ = require('lodash');
+    _.join([1,2],'23');
 },'vendor')
 
 export default 'pageA';

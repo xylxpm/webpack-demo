@@ -12,17 +12,27 @@ module.exports = {
     },
     module:{
         rules:[
-            {
-                test: /\.js$/,
-                use:{ loader:'babel-loader' },
-                exclude:'/node_modules/',
-                include: [path.resolve(__dirname, './dist')]
-            },
+            // {
+            //     test: /\.js$/,
+            //     use:{ loader:'babel-loader' },
+            //     exclude:'/node_modules/',
+            //     include: [path.resolve(__dirname, './dist')]
+            // },
             {
                 test:/\.css$/,
                 use:[
-                    {loader: 'style-loader/useable'},
-                  {loader: 'css-loader'}
+                    {
+                        loader: 'style-loader',
+                        options:{
+
+                            insertInto:'#app',
+                            singleton:true,
+                            transform:'./css.transform.js'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                    }
                 ]
             }
         ]

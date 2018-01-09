@@ -1,8 +1,10 @@
+@homecolor:#fff333;
+
 html {
-    background-color: #c0c0c0;
+    background-color: @homecolor;
 }
 .box{
-    composes: bigbox from './common.css';
+    composes: bigbox from './common.less';
     height: 200px;
     width: 200px;
     border-radius: 4px;

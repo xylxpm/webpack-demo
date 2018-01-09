@@ -1,4 +1,5 @@
 var path = require('path');
+var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry:{
@@ -12,33 +13,34 @@ module.exports = {
     },
     module:{
         rules:[
-            // {
-            //     test: /\.js$/,
-            //     use:{ loader:'babel-loader' },
-            //     exclude:'/node_modules/',
-            //     include: [path.resolve(__dirname, './dist')]
-            // },
             {
-                test:/\.css$/,
-                use:[
-                    {
+                test:/\.less$/,
+                use:ExtractTextWebpackPlugin.extract({
+                    fallback:{
                         loader: 'style-loader',
                         options:{
-                            //insertInto:'#app',
-                            singleton:true,
-                           // transform:'./css.transform.js'
+                            singleton:true
                         }
                     },
-                    {
-                        loader: 'css-loader',
-                        options:{
-                         //   minimize:true,  /*压缩css代码*/
-                            modules:true,
-                            localIdentName:'[path][name]_[local]_[hash:base64:5]'
+                    use: [{
+                            loader: 'css-loader',
+                            options: {
+                                minimize: true,
+                                modules: true,
+                                localIdentName: '[path][name]_[local]_[hash:base64:5]'
+                            }
+                        },
+                        {
+                            loader: 'less-loader'
                         }
-                    }
-                ]
+                    ]
+                })
             }
         ]
-    }
+    },
+    plugins:[
+        new ExtractTextWebpackPlugin({
+            filename:'[name].min.css'
+        })
+    ]
 }

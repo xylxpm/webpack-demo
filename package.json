@@ -31,9 +31,10 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "webpack-dev-server": "^2.10.1"
   },
-  "browserslist":[
+  "browserslist": [
     ">= 1%",
     "last 2 versions"
   ]

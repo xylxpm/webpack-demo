@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -35,6 +36,18 @@ module.exports = {
                         }
                     ]
                 })
+            },
+            {
+                test:/\.js$/,
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets:['env'],
+                            plugins:['lodash']
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -42,6 +55,7 @@ module.exports = {
         new ExtractTextWebpackPlugin({
             filename:'[name].min.css',
             allChunks:false /*提取css的范围，默认false，只提取初始使用的，如果设为true，就提取全部。*/
-        })
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ]
 }

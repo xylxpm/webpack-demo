@@ -22,9 +22,22 @@ module.exports = {
                             singleton:true
                         }
                     },
-                    use: [
+                    use: [{
+                        loader: 'css-loader',
+                        options: {
+                            //minimize: true,
+                            modules: true,
+                            localIdentName: '[path][name]_[local]_[hash:base64:5]'
+                        }
+                    },
                         {
-                            loader: 'css-loader'
+                            loader: 'postcss-loader',
+                            options:{
+                                ident:'postcss',
+                                plugins:[
+                                    require('postcss-cssnext')()
+                                ]
+                            }
                         },
                         {
                             loader: 'less-loader'
@@ -33,5 +46,11 @@ module.exports = {
                 })
             }
         ]
-    }
+    },
+    plugins:[
+        new ExtractTextWebpackPlugin({
+            filename:'[name].min.css',
+            allChunks:false /*提取css的范围，默认false，只提取初始使用的，如果设为true，就提取全部。*/
+        })
+    ]
 }

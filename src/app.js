@@ -3,7 +3,10 @@ import {a} from './common/util'
 
 
 
+
 var app = document.getElementById('app');
-app.innerHTML = '<div class="' + base.box + '"></div>';
+var div = document.createElement('div');
+div.className = 'sbox';
+app.appendChild(div)
 
 console.log(a());

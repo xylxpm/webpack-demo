@@ -97,6 +97,21 @@ module.exports = {
                         /* img-loader 压缩图片。pngquant处理png类型的图片，还有别的参数，参看npmjs站上的说明*/
                     }
                 ]
+            },
+            {
+                test: /\.(eot|woff2?|ttf|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            name: '[name]-[hash:5].[ext]',
+                            limit: 5000,
+                            publicPath: '',
+                            outputPath: 'dist/',
+                            useRelativePath: true
+                        }
+                    }
+                ]
             }
         ]
     }

@@ -1,12 +1,10 @@
-import base from './css/base.less';
-import {a} from './common/util'
+import './css/base.less'
 
+import { a } from "./common/util";
+a()
 
-
-
-var app = document.getElementById('app');
-var div = document.createElement('div');
-div.className = 'sbox';
+var app = document.getElementById('app')
+var div = document.createElement('div')
+div.className = 'box'
 app.appendChild(div)
 
-console.log(a());

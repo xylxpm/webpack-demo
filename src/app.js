@@ -1,10 +1,11 @@
-import './css/base.less'
+import './css/base.less';
 
 import { a } from "./common/util";
-a()
+a();
 
-var app = document.getElementById('app')
-var div = document.createElement('div')
-div.className = 'box'
-app.appendChild(div)
+var app = document.getElementById('app');
+var div = document.createElement('div');
+div.className = 'box';
+app.appendChild(div);
 
+$('.ani1').addClass('new');

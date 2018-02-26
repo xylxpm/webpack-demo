@@ -1,8 +1,8 @@
-const path = require('path');
-const webpack = require('webpack');
-const PurifyCSSPlugin = require('purifycss-webpack');
-const glob = require('glob-all');
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+var path = require('path');
+var webpack = require('webpack');
+// var PurifyCSSPlugin = require('purifycss-webpack');
+// var glob = require('glob-all');
+var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 var extractLess = new ExtractTextWebpackPlugin({
     filename: '[name].min.css',
 })
@@ -14,6 +14,11 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
+    },
+    resolve: {
+        alias: {
+            jquery$:path.resolve(__dirname,'./src/libs/jquery.min.js')
+        }
     },
     module: {
         rules: [
@@ -97,7 +102,8 @@ module.exports = {
                         /* img-loader 压缩图片。pngquant处理png类型的图片，还有别的参数，参看npmjs站上的说明*/
                     }
                 ]
-            },
+            }
+            ,
             {
                 test: /\.(eot|woff2?|ttf|svg)$/,
                 use: [
@@ -119,13 +125,17 @@ module.exports = {
     plugins: [
         extractLess,
 
-        new PurifyCSSPlugin({
-            /* Purifycss 一定要写在 ExtractTextWebpackPlugin后面*/
-            paths: glob.sync([
-                path.join(__dirname, './*.html'),
-                path.join(__dirname, './src/*.js')
-            ]),
-        }),
-        new webpack.optimize.UglifyJsPlugin()
+        // new PurifyCSSPlugin({
+        //     /* Purifycss 一定要写在 ExtractTextWebpackPlugin后面*/
+        //     paths: glob.sync([
+        //         path.join(__dirname, './*.html'),
+        //         path.join(__dirname, './src/*.js')
+        //     ]),
+        // }),
+        new webpack.ProvidePlugin({
+            $: "jquery"
+        })
+        // ,
+        // new webpack.optimize.UglifyJsPlugin()
     ]
 }

@@ -2,10 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 var PurifyCSSPlugin = require('purifycss-webpack');
 var glob = require('glob-all');
-var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var extractLess = new ExtractTextWebpackPlugin({
-    filename: '[name].min.css',
+    filename: '[name].min.[hash:5].css',
 })
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.[hash:5].js'
     },
     resolve: {
         alias: {
@@ -51,20 +52,20 @@ module.exports = {
                             }
                         },
 
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                ident: 'postcss',
-                                plugins: [
-                                    require('postcss-sprites')({
-                                        spritePath: 'dist/assets/imgs/sprites',
-                                        retina: true
-                                    }),
-                                    require('postcss-cssnext')()
-                                ]
-                            }
-                            /* postcss-loader 合成雪碧图 ,spritePath合成之后的图片存放的位置，retina处理视网膜屏幕使用的图片，注意对应图片要用@2x命名，css中样式宽高除2*/
-                        },
+                        // {
+                        //     loader: 'postcss-loader',
+                        //     options: {
+                        //         ident: 'postcss',
+                        //         plugins: [
+                        //             require('postcss-sprites')({
+                        //                 spritePath: 'dist/assets/imgs/sprites',
+                        //                 retina: true
+                        //             }),
+                        //             require('postcss-cssnext')()
+                        //         ]
+                        //     }
+                        //     /* postcss-loader 合成雪碧图 ,spritePath合成之后的图片存放的位置，retina处理视网膜屏幕使用的图片，注意对应图片要用@2x命名，css中样式宽高除2*/
+                        // },
                         {
                             loader: 'less-loader'
                         }
@@ -74,25 +75,25 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 use: [
-                    //
-                    // {
-                    //     loader: 'file-loader',
-                    //     options: {
-                    //         publicPath: '',
-                    //         outputPath: 'dist/',
-                    //         useRelativePath: true
-                    //     }
-                    //     /* file-loader 处理css中的图片。outputPath指定输出目录，useRelativePath生成相对url地址，publicPath公共路径，最外层的output不能设置公共路径，否则不起作用*/
-                    // },
+
                     {
-                        loader: 'url-loader',
+                        loader: 'file-loader',
                         options: {
-                            name: '[name]-[hash:5].[ext]',
-                            limit: 1000,
-                            outputPath: 'assets/imgs/'
+                            publicPath: '',
+                            outputPath: 'dist/',
+                            useRelativePath: true
                         }
-                       /* url-loader base64编码。limit 最小容量，name图片名字。配合postcss-loader使用*/
+                        /* file-loader 处理css中的图片。outputPath指定输出目录，useRelativePath生成相对url地址，publicPath公共路径，最外层的output不能设置公共路径，否则不起作用*/
                     },
+                    // {
+                    //     loader: 'url-loader',
+                    //     options: {
+                    //         name: '[name]-[hash:5].[ext]',
+                    //         limit: 1000,
+                    //         outputPath: 'assets/imgs/'
+                    //     }
+                    //    /* url-loader base64编码。limit 最小容量，name图片名字。配合postcss-loader使用*/
+                    // },
                     {
                         loader: 'img-loader',
                         options: {
@@ -112,18 +113,17 @@ module.exports = {
                         options: {
                             name: '[name]-[hash:5].[ext]',
                             limit: 5000,
-                            publicPath: '',
-                            outputPath: 'dist/',
+                            outputPath: 'assets/fonts/',
                             useRelativePath: true
                         }
                     }
                 ]
             },
             {
-                test:path.resolve(__dirname,'src/app.js'),
-                use:[
+                test: path.resolve(__dirname, 'src/app.js'),
+                use: [
                     {
-                        loader:'imports-loader',
+                        loader: 'imports-loader',
                         options: {
                             $: "jquery"
                         }
@@ -144,6 +144,15 @@ module.exports = {
             ]),
         }),
 
-         new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
+
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: './index.html',
+            chunks: ['app'],
+            minify: {
+                collapseWhitespace: true
+            }
+        })
     ]
 }
